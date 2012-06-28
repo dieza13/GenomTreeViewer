@@ -3,6 +3,7 @@
 #include "acidarraycreator.h"
 #include "acidsetter.h"
 #include "genomnode.h"
+#include "QSpinBox"
 
 class AcidSetContext
 {
@@ -15,7 +16,7 @@ private:
 public:
     AcidSetContext();
     ~AcidSetContext();
-    void setAcidsArray(const char *fileName, QSlider * slider);
+    void setAcidsArray(const char *fileName, QSlider * slider, QSpinBox * spinBox);
     void setAcids(GenomNode * mainNode, int position);
 };
 

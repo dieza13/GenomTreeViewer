@@ -1,6 +1,7 @@
 #include "acidarraycreator.h"
 #include "map"
 #include "QSlider"
+#include "QSpinBox"
 
 void AcidArrayCreator::setFile(const char *fileName)
 {
@@ -11,7 +12,7 @@ AcidArrayCreator::AcidArrayCreator()
 {    
 }
 
-std::map<std::string, std::string>  AcidArrayCreator::getAcidArray(QSlider * slider)
+std::map<std::string, std::string>  AcidArrayCreator::getAcidArray(QSlider * slider, QSpinBox *spinBox)
 {
     int acidCount;
     std::map<std::string, std::string>  acidArray;
@@ -36,5 +37,6 @@ std::map<std::string, std::string>  AcidArrayCreator::getAcidArray(QSlider * sli
     }
     file.close();
     slider->setMaximum(acidCount - 1);
+    spinBox->setMaximum(acidCount - 1);
     return acidArray;
 }

@@ -41,22 +41,25 @@ void MainWindow::on_pushButton_clicked()
 void MainWindow::on_pushButton_2_clicked()
 {
     const char * path = openFileDialog(1);
-
-    ui->horizontalSlider->setEnabled(true);
-    acidSetContext = new AcidSetContext();
-    acidSetContext->setAcidsArray(path,ui->horizontalSlider);
-    acidSetContext->setAcids(mainNode,0);
+    if (path != NULL){
+        ui->horizontalSlider->setEnabled(true);
+        ui->spinBox->setEnabled(true);
+        acidSetContext = new AcidSetContext();
+        acidSetContext->setAcidsArray(path,ui->horizontalSlider, ui->spinBox);
+        acidSetContext->setAcids(mainNode,0);
+    }
 }
 
 void MainWindow::on_horizontalSlider_valueChanged(int value)
 {
     acidSetContext->setAcids(mainNode, value);
+    ui->spinBox->setValue(value);
 }
 
 const char * MainWindow::openFileDialog(int i)
 {
     QString str = QFileDialog::getOpenFileName().toUtf8();
-    if( (str.endsWith(".tree") && (i == 0)) || (str.endsWith(".fasta")  && (i == 1))) {
+    if( (str.endsWith(".tree") && (i == 0)) || (str.endsWith(".fasta")  && (i == 1)) || (str.endsWith(".nwk")  && (i == 0))) {
         std::string fileName = str.toAscii().data();
         if (fileName.compare("") == 0) {
             return fileName.c_str();
@@ -76,3 +79,18 @@ void MainWindow::deleteNodes(GenomNode *node)
      ui->graphicsView->childAt(node->getNodeX(),node->getNodeY())->close();
 }
 
+
+void MainWindow::on_spinBox_valueChanged(const QString &arg1)
+{
+
+    ui->horizontalSlider->setValue(arg1.toInt());
+}
+
+void MainWindow::resizeEvent(QResizeEvent *event)
+{
+
+    ui->graphicsView->children().removeAll();
+    int x = ui->centralWidget->width();
+    int y = ui->centralWidget->height();
+    ui->graphicsView->setGeometry(0, 70, x, y - 50);
+}

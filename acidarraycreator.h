@@ -4,6 +4,7 @@
 #include <string>
 #include "map"
 #include "QSlider"
+#include "QSpinBox"
 
 class AcidArrayCreator
 {
@@ -12,7 +13,7 @@ private:
 public:
     void setFile(const char *fileName);
     AcidArrayCreator();
-    std::map<std::string, std::string>  getAcidArray(QSlider *slider);
+    std::map<std::string, std::string>  getAcidArray(QSlider *slider, QSpinBox * spinBox);
 };
 
 #endif // ACIDARRAYCREATOR_H

@@ -24,12 +24,20 @@ private slots:
 
     void on_horizontalSlider_valueChanged(int value);
 
+    void on_spinBox_valueChanged(const QString &arg1);
+
+
 private:
-    const char * openFileDialog(int i);
-    void deleteNodes(GenomNode * node);
     GenomNode * mainNode;
     AcidSetContext * acidSetContext;
     Ui::MainWindow * ui;
+
+private:
+    const char * openFileDialog(int i);
+    void deleteNodes(GenomNode * node);
+    void resizeEvent(QResizeEvent* event);
 };
+
+
 
 #endif // MAINWINDOW_H
