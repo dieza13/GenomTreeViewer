@@ -14,16 +14,20 @@ class TreeBuilder
 {
 //    vector<GenomNode> genomList;
 private:
-    GenomNode * setNode(QString *name, GenomNode * subList);
+
     std::fstream file;
     int levelCount;
     std::multimap<int, GenomNode*> genomByLevelList;
+
+private:
+    GenomNode * setNode(QString *name, double lenght, GenomNode *subList);
     void setLevel(GenomNode * node, int level, GenomNode * subList);
+    double getLenght();
 
 public:
 
     TreeBuilder();
-//    QList<QStandardItem*>   getTree();
+    ~TreeBuilder();
     GenomNode*  getTree(int level);
     void setFile(const char *fileName);
     std::multimap<int, GenomNode*> * getGenomMap();

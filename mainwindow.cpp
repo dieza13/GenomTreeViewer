@@ -6,6 +6,8 @@
 #include "QVBoxLayout"
 #include "stdlib.h"
 #include "QFileDialog"
+#include <QDesktopWidget>
+#include "QList"
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -14,36 +16,50 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     mainNode = NULL;
+    desktopX = QApplication::desktop()->width();
+    desktopY = QApplication::desktop()->height();
+    ui->centralWidget->setMinimumWidth(desktopX * 0.67);
+    ui->centralWidget->setMinimumHeight(desktopY * 0.67);
+    treeCreaterContext = 0;
+    acidSetContext = 0;
 
 }
 
 MainWindow::~MainWindow()
 {
+    mainNode = NULL;
     delete ui;
     delete acidSetContext;
+    delete treeCreaterContext;
     delete mainNode;
 }
 
 void MainWindow::on_pushButton_clicked()
 {
+    ui->extended->setEnabled(true);
+    bool extended = ui->extended->isChecked();
    const char * path = openFileDialog(0);
    if (path != NULL){
-        if (!mainNode == NULL) {
+       ui->typeComboBox->setEnabled(true);
+        if (mainNode != NULL) {
             deleteNodes(mainNode);
         }
-        TreeCreaterContext * treeCreaterContext = new TreeCreaterContext();
-        mainNode = treeCreaterContext->createTree(path,ui->graphicsView);
+//        delete mainNode;
+        mainNode = 0;
+        delete treeCreaterContext;
+        treeCreaterContext = new TreeCreaterContext();
+        mainNode = treeCreaterContext->createTree(path,ui->graphicsView, extended);
    }
-
-
 }
 
 void MainWindow::on_pushButton_2_clicked()
 {
     const char * path = openFileDialog(1);
-    if (path != NULL){
+    if (path != NULL){        
+        ui->AcidComboBox->setEnabled(true);
         ui->horizontalSlider->setEnabled(true);
         ui->spinBox->setEnabled(true);
+        delete acidSetContext;
         acidSetContext = new AcidSetContext();
         acidSetContext->setAcidsArray(path,ui->horizontalSlider, ui->spinBox);
         acidSetContext->setAcids(mainNode,0);
@@ -66,7 +82,7 @@ const char * MainWindow::openFileDialog(int i)
         }
         return fileName.c_str();
     }
-    return NULL;
+    return 0;
 }
 
 
@@ -76,21 +92,52 @@ void MainWindow::deleteNodes(GenomNode *node)
         deleteNodes(node->getLeftChild());
         deleteNodes(node->getRightChild());
     }
-     ui->graphicsView->childAt(node->getNodeX(),node->getNodeY())->close();
+    node->genomBody->close();
 }
+
+
 
 
 void MainWindow::on_spinBox_valueChanged(const QString &arg1)
 {
-
     ui->horizontalSlider->setValue(arg1.toInt());
 }
 
 void MainWindow::resizeEvent(QResizeEvent *event)
-{
+{  
+    reDraw();
 
-    ui->graphicsView->children().removeAll();
+}
+
+void MainWindow::on_extended_clicked()
+{
+    if (!ui->extended->isChecked()) ui->extended->setIcon(QIcon(":/nonequal"));
+    else  ui->extended->setIcon(QIcon(":/equal"));
+    reDraw();
+}
+
+void MainWindow::reDraw()
+{
     int x = ui->centralWidget->width();
     int y = ui->centralWidget->height();
-    ui->graphicsView->setGeometry(0, 70, x, y - 50);
+    ui->graphicsView->setGeometry(0, 108, x, y - 88);
+    bool extended = ui->extended->isChecked();
+    if (mainNode != NULL) {
+        treeCreaterContext->redrawTree(ui->graphicsView, extended);
+    }
+}
+
+void MainWindow::on_typeComboBox_activated(const QString &arg1)
+{
+
+    if (mainNode != NULL) {
+        mainNode->setGenomTitleColor(arg1);
+    }
+}
+
+void MainWindow::on_AcidComboBox_activated(const QString &arg1)
+{
+    if (mainNode != NULL) {
+        mainNode->setAcidColor(arg1);
+    }
 }

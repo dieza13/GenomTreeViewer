@@ -10,6 +10,7 @@ AcidSetContext::AcidSetContext()
 
 AcidSetContext::~AcidSetContext()
 {
+//    if (acidArrayCreator != NULL && acidSetter != NULL)
     delete acidArrayCreator, acidSetter;
 }
 

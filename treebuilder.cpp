@@ -34,6 +34,7 @@ GenomNode * TreeBuilder::getTree(int level)
     GenomNode * list = new GenomNode[2]();
     GenomNode * subList = NULL;
     QString nodeName = NULL;
+    double lenght = 1;
     while(!file.eof()){
         char ch;
         file.get(ch);
@@ -42,7 +43,7 @@ GenomNode * TreeBuilder::getTree(int level)
             subList = newList;
         }
         if (ch == ',') {
-            list[0] = *setNode(&nodeName, subList);
+            list[0] = *setNode(&nodeName, lenght, subList);
             setLevel(&list[0],level,subList);
             nodeName = "";
             subList =  NULL;
@@ -57,26 +58,31 @@ GenomNode * TreeBuilder::getTree(int level)
         if (ch == '_') {
             nodeName = "";
         }
+        if (ch == ':') {
+            lenght = getLenght();
+        }
 
     }
     if (nodeName != NULL) {
-        list[1] = *setNode(&nodeName, subList);
+        list[1] = *setNode(&nodeName, lenght, subList);
         setLevel(&list[1],level,subList);
 
         if (level != 0) {
-            genomByLevelList.insert(std::make_pair(list[0].getLevel(), &list[0]));
+            genomByLevelList.insert(std::make_pair(list[0].getIndex(), &list[0]));
         }
-        int lv = list[1].getLevel();
+        int lv = list[1].getIndex();
         GenomNode * node = &list[1];
         genomByLevelList.insert(std::make_pair(lv, node));
     }
     return list;
 }
 
-GenomNode * TreeBuilder::setNode(QString * name, GenomNode * subList)
+GenomNode * TreeBuilder::setNode(QString * name, double lenght, GenomNode * subList)
 {
     GenomNode *currentNode;
     currentNode = new GenomNode();
+    currentNode->setLenght(lenght);
+    std::cout << lenght << std::endl;
     currentNode->setGenomName(name);
     currentNode->setLeftChild(&subList[0]);
     currentNode->setRightChild(&subList[1]);
@@ -85,16 +91,40 @@ GenomNode * TreeBuilder::setNode(QString * name, GenomNode * subList)
 
 void TreeBuilder::setLevel(GenomNode * node, int level, GenomNode * subList)
 {
-    if (subList == NULL) node->level = -1;
-    else {
-        node->setLevel(level);
-        if (node->getLevel() > levelCount) levelCount = node->getLevel();
+    node->setIndex(level);
+    if (subList == NULL) {        
+        node->index = -1;
+        node->setLeftChild(0);
+        node->setRightChild(0);
     }
+    else {        
+        if (node->getIndex() > levelCount) levelCount = node->getIndex();
+    }
+}
+
+double TreeBuilder::getLenght()
+{
+    char ch;
+    QString str;
+    double lenght;
+    file.get(ch);
+    while (isalnum(ch) || ch == '.' || ch == ' ')  {
+        str += ch;
+        file.get(ch);
+    }
+    file.putback(ch);
+
+    lenght = str.toDouble();
+    return lenght;
 }
 
 TreeBuilder::TreeBuilder()
 {
     levelCount = 0;
+}
+
+TreeBuilder::~TreeBuilder()
+{
 }
 
 

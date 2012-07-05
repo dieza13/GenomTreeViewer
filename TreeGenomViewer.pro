@@ -34,6 +34,7 @@ HEADERS  += mainwindow.h \
 FORMS    += mainwindow.ui \
     openfiledialog.ui
 
-RESOURCES +=
+RESOURCES += \
+    res.qrc
 
 OTHER_FILES +=

@@ -3,20 +3,28 @@
 #include "treedrawer.h"
 #include "genomnode.h"
 
-GenomNode * TreeCreaterContext::createTree(const char * fileName, QGraphicsView * treeView)
+GenomNode * TreeCreaterContext::createTree(const char * fileName, QGraphicsView * treeView, bool extended)
 {
     treeBuilderRole->setFile(fileName);
     genomByLevelList = treeBuilderRole->getGenomMap();
-    return treeDrawerRole->drawTree(genomByLevelList,treeBuilderRole->getLevelCount(), treeView);
+    return treeDrawerRole->drawTreeFromChildren(genomByLevelList,treeBuilderRole->getLevelCount(), treeView, extended);
 }
 
 TreeCreaterContext::TreeCreaterContext()
 {
     treeBuilderRole = new TreeBuilder();
     treeDrawerRole = new TreeDrawer();
+
+}
+
+void TreeCreaterContext::redrawTree(QGraphicsView * treeView, bool extended)
+{
+    treeDrawerRole->drawTreeFromChildren(genomByLevelList,treeBuilderRole->getLevelCount(), treeView, extended);
 }
 
 TreeCreaterContext::~TreeCreaterContext()
 {
-    delete treeBuilderRole, treeDrawerRole;
+    delete treeBuilderRole;
+    delete treeDrawerRole;
+
 }

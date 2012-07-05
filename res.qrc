@@ -1,0 +1,13 @@
+<RCC>
+    <qresource prefix="/">
+        <file alias="yellow">yellow.png</file>
+        <file alias="red">red.png</file>
+        <file alias="grey">grey.png</file>
+        <file alias="green">green.png</file>
+        <file alias="brown">brown.png</file>
+        <file alias="blue">blue.png</file>
+        <file alias="black">black.png</file>
+        <file alias="nonequal">nonequal.png</file>
+        <file alias="equal">equal.png</file>
+    </qresource>
+</RCC>

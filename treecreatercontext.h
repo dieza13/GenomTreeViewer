@@ -11,8 +11,9 @@ private:
     TreeBuilder * treeBuilderRole;
     TreeDrawer * treeDrawerRole;
 public:
-    GenomNode *createTree(const char *fileName, QGraphicsView * treeView);
+    GenomNode *createTree(const char *fileName, QGraphicsView * treeView, bool extended);
     TreeCreaterContext();
+    void redrawTree(QGraphicsView * treeView, bool extended);
     ~TreeCreaterContext();
 };
 
