@@ -161,15 +161,12 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *event)
        treeCreaterContext->reflectBranch(mainNode,ui->graphicsView,x,y);
 }
 
-//void QGraphicsView::mousePressEvent(QMouseEvent *event)
-//{
-//    std::cout << event->pos().x() << std::endl;
-//    int x = event->pos().x();
-//    int y = event->pos().y();
-
-
-
-//}
+void MainWindow::mousePressEvent(QMouseEvent *event)
+{
+    std::cout << event->pos().x() << std::endl;
+    int x = event->pos().x();
+    int y = event->pos().y();
+}
 
 
 

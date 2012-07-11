@@ -20,9 +20,10 @@ public:
     ~MainWindow();
     
 
-
-    void mousePressEvent(QResizeEvent *event);
+protected:
+    void mousePressEvent(QMouseEvent *event);
     void mouseReleaseEvent(QMouseEvent *event);
+
 private slots:
     void on_pushButton_clicked();
 
