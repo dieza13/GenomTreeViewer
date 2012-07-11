@@ -166,3 +166,31 @@ void GenomNode::setGenomTitleColor(QString color)
 
     genomBody->setStyleSheet("QGroupBox::title {color:" + color + ";}");
 }
+
+void GenomNode::setTop()
+{
+    if (leftChild == NULL) top = nodeY;
+    else {
+        if (leftChild->getTop() < rightChild->getTop()) top = leftChild->getTop();
+        else top = rightChild->getTop();
+    }
+}
+
+void GenomNode::setBottom()
+{
+    if (rightChild == NULL) bottom = nodeY;
+    else {
+        if (leftChild->getBottom() < rightChild->getBottom()) bottom = rightChild->getBottom();
+        else bottom = leftChild->getBottom();
+    }
+}
+
+int GenomNode::getTop()
+{
+    return top;
+}
+
+int GenomNode::getBottom()
+{
+    return bottom;
+}

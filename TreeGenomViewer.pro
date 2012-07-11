@@ -29,7 +29,8 @@ HEADERS  += mainwindow.h \
     treecreatercontext.h \
     acidarraycreator.h \
     acidsetter.h \
-    acidsetcontext.h
+    acidsetcontext.h \
+    treeviewer.h
 
 FORMS    += mainwindow.ui \
     openfiledialog.ui

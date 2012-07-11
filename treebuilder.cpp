@@ -14,8 +14,6 @@ void TreeBuilder::setFile(const char *fileName)
 
 std::multimap<int, GenomNode*> * TreeBuilder::getGenomMap()
 {
-    getTree(0)[1];
-    file.close();
     return &genomByLevelList;
 }
 
@@ -27,6 +25,11 @@ void TreeBuilder::setLevelCount(int level)
 int TreeBuilder::getLevelCount()
 {
     return levelCount;
+}
+
+void TreeBuilder::closeFile()
+{
+    file.close();
 }
 
 GenomNode * TreeBuilder::getTree(int level)
@@ -65,8 +68,7 @@ GenomNode * TreeBuilder::getTree(int level)
     }
     if (nodeName != NULL) {
         list[1] = *setNode(&nodeName, lenght, subList);
-        setLevel(&list[1],level,subList);
-
+        setLevel(&list[1],level,subList);        
         if (level != 0) {
             genomByLevelList.insert(std::make_pair(list[0].getIndex(), &list[0]));
         }

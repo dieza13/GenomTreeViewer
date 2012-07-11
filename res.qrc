@@ -8,6 +8,6 @@
         <file alias="blue">blue.png</file>
         <file alias="black">black.png</file>
         <file alias="nonequal">nonequal.png</file>
-        <file alias="equal">equal.png</file>
+        <file>equal.png</file>
     </qresource>
 </RCC>

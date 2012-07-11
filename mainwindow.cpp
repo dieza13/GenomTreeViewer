@@ -8,6 +8,8 @@
 #include "QFileDialog"
 #include <QDesktopWidget>
 #include "QList"
+#include "QMessageBox"
+#include "QMouseEvent"
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -22,6 +24,13 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->centralWidget->setMinimumHeight(desktopY * 0.67);
     treeCreaterContext = 0;
     acidSetContext = 0;
+    ui->pushButton->setMouseTracking(true);
+    ui->graphicsView->setMouseTracking(true);
+    ui->graphicsView->viewport()->installEventFilter(ui->graphicsView);
+    ui->graphicsView->setMouseTracking(true);
+    ui->graphicsView->viewport()->installEventFilter(ui->centralWidget);
+
+
 
 }
 
@@ -33,6 +42,8 @@ MainWindow::~MainWindow()
     delete treeCreaterContext;
     delete mainNode;
 }
+
+
 
 void MainWindow::on_pushButton_clicked()
 {
@@ -141,3 +152,31 @@ void MainWindow::on_AcidComboBox_activated(const QString &arg1)
         mainNode->setAcidColor(arg1);
     }
 }
+
+void MainWindow::mouseReleaseEvent(QMouseEvent *event)
+{
+   std::cout << event->pos().x() << " " << event->pos().y() << std::endl;
+       int x = event->pos().x();
+       int y = event->pos().y() - ui->graphicsView->y();
+       treeCreaterContext->reflectBranch(mainNode,ui->graphicsView,x,y);
+}
+
+//void QGraphicsView::mousePressEvent(QMouseEvent *event)
+//{
+//    std::cout << event->pos().x() << std::endl;
+//    int x = event->pos().x();
+//    int y = event->pos().y();
+
+
+
+//}
+
+
+
+
+
+
+
+
+
+

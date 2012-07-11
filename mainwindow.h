@@ -5,6 +5,7 @@
 #include "genomnode.h"
 #include "acidsetcontext.h"
 #include "treecreatercontext.h"
+#include "QGraphicsView"
 
 namespace Ui {
 class MainWindow;
@@ -19,6 +20,9 @@ public:
     ~MainWindow();
     
 
+
+    void mousePressEvent(QResizeEvent *event);
+    void mouseReleaseEvent(QMouseEvent *event);
 private slots:
     void on_pushButton_clicked();
 
@@ -34,6 +38,11 @@ private slots:
     void on_typeComboBox_activated(const QString &arg1);
 
     void on_AcidComboBox_activated(const QString &arg1);
+
+//    void mousePressEvent(QMouseEvent *event);
+
+
+
 
 private:
     GenomNode * mainNode;

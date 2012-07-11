@@ -13,6 +13,8 @@ private:
     int nodeY;
     double linkLenght;
     int level;
+    int top;
+    int bottom;
 
 
 public:
@@ -42,6 +44,11 @@ public:
     double getLenght();
     void setAcidColor(QString color);
     void setGenomTitleColor(QString color);
+    void setTop();
+    void setBottom();
+    int getTop();
+    int getBottom();
+
 };
 
 #endif // GENOMNODE_H

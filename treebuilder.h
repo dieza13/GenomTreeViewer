@@ -33,6 +33,7 @@ public:
     std::multimap<int, GenomNode*> * getGenomMap();
     void setLevelCount(int level);
     int getLevelCount();
+    void closeFile();
 };
 
 #endif // TREEBUILDER_H

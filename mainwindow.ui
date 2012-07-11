@@ -133,7 +133,7 @@
        <string/>
       </property>
       <property name="icon">
-       <iconset resource="res.qrc">
+       <iconset>
         <normaloff>:/equal</normaloff>:/equal</iconset>
       </property>
       <property name="checkable">
@@ -370,15 +370,6 @@
        <enum>Qt::Vertical</enum>
       </property>
      </widget>
-     <zorder>pushButton</zorder>
-     <zorder>line</zorder>
-     <zorder>horizontalSlider</zorder>
-     <zorder>spinBox</zorder>
-     <zorder>extended</zorder>
-     <zorder>graphicsView</zorder>
-     <zorder>groupBox</zorder>
-     <zorder>pushButton_2</zorder>
-     <zorder>line_2</zorder>
     </widget>
     <widget class="QWidget" name="tab_2">
      <attribute name="title">
